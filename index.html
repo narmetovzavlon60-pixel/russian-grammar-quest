@@ -1,0 +1,1960 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Russian Grammar Quest | Грамотный Квест</title>
+    <style>
+        :root {
+            --bg: #121225;
+            --surface: #1a1a3a;
+            --surface-light: #1f1f45;
+            --primary: #00f2fe;
+            --primary-glow: #00f2fe60;
+            --accent: #7f00ff;
+            --accent-glow: #7f00ff50;
+            --success: #00f5d4;
+            --success-glow: #00f5d460;
+            --danger: #ff007f;
+            --danger-glow: #ff007f60;
+            --warning: #ffb800;
+            --text: #e0e0f0;
+            --text-secondary: #9898c0;
+            --text-dark: #121225;
+            --border: #2a2a55;
+            --radius: 16px;
+            --radius-sm: 10px;
+            --radius-xs: 6px;
+            --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.5);
+            --shadow-btn: 0 4px 16px rgba(0, 0, 0, 0.45);
+            --font-main: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            --font-mono: 'SF Mono', 'Cascadia Code', 'Consolas', monospace;
+            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --pixel-shadow: 3px 3px 0px rgba(0, 0, 0, 0.5);
+            --header-bg: #1a1a3a;
+            --card-bg: #1a1a3a;
+            --btn-bg: #1f1f45;
+        }
+
+        body.theme-neon {
+            --bg: #0a0a0a;
+            --surface: #111118;
+            --surface-light: #181825;
+            --primary: #39ff14;
+            --primary-glow: #39ff1470;
+            --accent: #ff00ff;
+            --accent-glow: #ff00ff60;
+            --success: #00ffcc;
+            --danger: #ff3366;
+            --warning: #ffe600;
+            --text: #f0f0f0;
+            --text-secondary: #a0a0b0;
+            --border: #333355;
+            --header-bg: #111118;
+            --card-bg: #111118;
+            --btn-bg: #181825;
+        }
+        body.theme-neon .option-btn:hover:not(.disabled) {
+            box-shadow: 0 0 20px #39ff1480;
+        }
+        body.theme-neon .topic-card:hover {
+            box-shadow: 0 12px 40px #39ff1430;
+        }
+
+        body.theme-retro-paper {
+            --bg: #f5f0e8;
+            --surface: #fffef9;
+            --surface-light: #faf7f0;
+            --primary: #8b4513;
+            --primary-glow: #8b451330;
+            --accent: #b8860b;
+            --accent-glow: #b8860b30;
+            --success: #2e7d32;
+            --danger: #b71c1c;
+            --warning: #e65100;
+            --text: #2c1810;
+            --text-secondary: #5d4037;
+            --text-dark: #2c1810;
+            --border: #c4b5a0;
+            --header-bg: #fffef9;
+            --card-bg: #fffef9;
+            --btn-bg: #faf7f0;
+            --shadow-card: 0 6px 24px rgba(0, 0, 0, 0.12);
+            --shadow-btn: 0 3px 10px rgba(0, 0, 0, 0.15);
+            --pixel-shadow: 3px 3px 0px rgba(0, 0, 0, 0.2);
+        }
+        body.theme-retro-paper .option-btn:hover:not(.disabled) {
+            box-shadow: 0 0 14px #8b451340;
+            background: #fdf5e6;
+        }
+        body.theme-retro-paper .topic-card:hover {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: var(--font-main);
+            background: var(--bg);
+            background-image:
+                radial-gradient(ellipse at 25% 15%, rgba(0, 242, 254, 0.05) 0%, transparent 55%),
+                radial-gradient(ellipse at 70% 55%, rgba(127, 0, 255, 0.06) 0%, transparent 55%),
+                radial-gradient(ellipse at 40% 85%, rgba(255, 0, 127, 0.04) 0%, transparent 50%);
+            min-height: 100vh;
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 12px;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            -webkit-user-select: none;
+            transition: background 0.4s ease, color 0.4s ease;
+        }
+        .app-header {
+            width: 100%;
+            max-width: 860px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 14px 18px;
+            background: var(--header-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--border);
+            position: sticky;
+            top: 10px;
+            z-index: 200;
+            margin-bottom: 16px;
+            transition: background 0.4s ease, border-color 0.4s ease;
+        }
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .header-logo {
+            font-size: 1.8rem;
+            filter: drop-shadow(0 0 10px var(--primary-glow));
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+        @keyframes logoFloat {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+        .header-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 0.4px;
+            line-height: 1.2;
+        }
+        .header-subtitle {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .header-stats {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .stat-badge {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: var(--surface-light);
+            padding: 7px 12px;
+            border-radius: 22px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+        .stat-badge.score-badge {
+            color: var(--warning);
+            border-color: #ffb80030;
+        }
+        .stat-badge.streak-badge {
+            color: var(--danger);
+            border-color: #ff007f30;
+            animation: pulseStreak 1s ease-in-out infinite;
+        }
+        .stat-badge.streak-badge.inactive {
+            animation: none;
+            color: var(--text-secondary);
+            border-color: var(--border);
+        }
+        .stat-badge.coin-badge {
+            color: #ffd700;
+            border-color: #ffd70030;
+        }
+        @keyframes pulseStreak {
+            0%,
+            100% {
+                box-shadow: 0 0 6px var(--danger-glow);
+            }
+            50% {
+                box-shadow: 0 0 18px var(--danger-glow);
+            }
+        }
+        .header-btns {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .icon-btn {
+            background: var(--surface-light);
+            border: 2px solid var(--border);
+            color: var(--text);
+            padding: 8px 12px;
+            border-radius: 22px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.75rem;
+            letter-spacing: 0.4px;
+            transition: var(--transition);
+            white-space: nowrap;
+            min-width: 42px;
+            text-align: center;
+        }
+        .icon-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            box-shadow: 0 0 12px var(--primary-glow);
+        }
+        .icon-btn:active {
+            transform: scale(0.93);
+        }
+        .icon-btn.active-toggle {
+            border-color: var(--success);
+            color: var(--success);
+            box-shadow: 0 0 10px var(--success-glow);
+        }
+        .main-container {
+            width: 100%;
+            max-width: 860px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .dashboard {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .dash-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            text-align: center;
+            color: var(--text);
+        }
+        .dash-subtitle {
+            font-size: 0.8rem;
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+        .difficulty-selector {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 6px;
+        }
+        .diff-btn {
+            background: var(--surface-light);
+            border: 2px solid var(--border);
+            color: var(--text);
+            padding: 10px 18px;
+            border-radius: 24px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.82rem;
+            letter-spacing: 0.4px;
+            transition: var(--transition);
+        }
+        .diff-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+        .diff-btn.selected {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: #000;
+            box-shadow: 0 0 16px var(--primary-glow);
+            font-weight: 800;
+        }
+        .topic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: 10px;
+        }
+        .topic-card {
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            padding: 16px 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .topic-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 36px rgba(0, 242, 254, 0.18);
+        }
+        .topic-card:active {
+            transform: scale(0.97);
+        }
+        .topic-card.completed {
+            border-color: var(--success);
+            background: #00f5d408;
+        }
+        .topic-card.completed::after {
+            content: '✓';
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            font-size: 1.2rem;
+            color: var(--success);
+            font-weight: 900;
+        }
+        .topic-icon {
+            font-size: 1.8rem;
+        }
+        .topic-name {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.3;
+        }
+        .topic-name-ru {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+        .topic-meta {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+        }
+        .topic-score {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 0.75rem;
+        }
+        .btn-action {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: #fff;
+            border: none;
+            padding: 14px 22px;
+            border-radius: 24px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 0.4px;
+            transition: var(--transition);
+            box-shadow: var(--shadow-btn);
+            text-align: center;
+            width: 100%;
+        }
+        .btn-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(127, 0, 255, 0.4);
+        }
+        .btn-action:active {
+            transform: scale(0.95);
+        }
+        .btn-action.btn-shop {
+            background: linear-gradient(135deg, #ffb800, #ff6b00);
+        }
+        .quiz-view {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            background: var(--surface);
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+        }
+        .quiz-topic-label {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 0.85rem;
+        }
+        .quiz-progress-text {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+        }
+        .progress-bar-wrap {
+            width: 100%;
+            height: 7px;
+            background: var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--success));
+            border-radius: 10px;
+            transition: width 0.4s ease;
+        }
+        .question-card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 22px 18px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-card);
+            transition: var(--transition);
+            position: relative;
+        }
+        .question-card.correct-flash {
+            border-color: var(--success) !important;
+            box-shadow: 0 0 30px var(--success-glow) !important;
+        }
+        .question-card.incorrect-flash {
+            border-color: var(--danger) !important;
+            box-shadow: 0 0 30px var(--danger-glow) !important;
+            animation: shake 0.5s ease;
+        }
+        @keyframes shake {
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+            20% {
+                transform: translateX(-7px);
+            }
+            40% {
+                transform: translateX(7px);
+            }
+            60% {
+                transform: translateX(-4px);
+            }
+            80% {
+                transform: translateX(4px);
+            }
+        }
+        .question-num {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 3px;
+            line-height: 1.5;
+        }
+        .question-text-ru {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 14px;
+            font-style: italic;
+        }
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .option-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--btn-bg);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 12px 14px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text);
+            transition: var(--transition);
+            text-align: left;
+            font-family: var(--font-main);
+            letter-spacing: 0.3px;
+            position: relative;
+        }
+        .option-btn:hover:not(.disabled) {
+            border-color: var(--primary);
+            box-shadow: 0 0 16px var(--primary-glow);
+            transform: translateX(3px);
+        }
+        .option-btn:active:not(.disabled) {
+            transform: scale(0.97);
+        }
+        .option-btn.disabled {
+            cursor: default;
+            pointer-events: none;
+            opacity: 0.7;
+        }
+        .option-btn.hidden-option {
+            display: none;
+        }
+        .option-btn.correct-choice {
+            border-color: var(--success) !important;
+            background: #00f5d412 !important;
+            box-shadow: 0 0 18px var(--success-glow) !important;
+        }
+        .option-btn.incorrect-choice {
+            border-color: var(--danger) !important;
+            background: #ff007f12 !important;
+            box-shadow: 0 0 18px var(--danger-glow) !important;
+        }
+        .option-letter {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+            transition: var(--transition);
+        }
+        .option-btn.correct-choice .option-letter {
+            background: var(--success);
+            color: #000;
+        }
+        .option-btn.incorrect-choice .option-letter {
+            background: var(--danger);
+            color: #fff;
+        }
+        .explanation-panel {
+            margin-top: 14px;
+            padding: 14px 16px;
+            border-radius: var(--radius-sm);
+            background: var(--surface-light);
+            border-left: 4px solid var(--primary);
+            animation: slideIn 0.3s ease;
+            display: none;
+        }
+        .explanation-panel.visible {
+            display: block;
+        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .explanation-ru {
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 3px;
+            font-size: 0.85rem;
+        }
+        .explanation-en {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            font-style: italic;
+        }
+        .btn-next {
+            margin-top: 10px;
+            background: var(--primary);
+            color: #000;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 22px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            letter-spacing: 0.4px;
+            transition: var(--transition);
+            box-shadow: var(--shadow-btn);
+            align-self: flex-end;
+            display: none;
+        }
+        .btn-next.visible {
+            display: inline-block;
+        }
+        .btn-next:hover {
+            filter: brightness(1.2);
+            box-shadow: 0 6px 22px var(--primary-glow);
+        }
+        .btn-next:active {
+            transform: scale(0.93);
+        }
+        .shop-view {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .shop-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-align: center;
+            color: var(--warning);
+        }
+        .shop-subtitle {
+            font-size: 0.8rem;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+        .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+        }
+        .shop-item {
+            background: var(--surface);
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            padding: 16px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transition: var(--transition);
+            box-shadow: var(--shadow-card);
+        }
+        .shop-item:hover {
+            border-color: var(--warning);
+            box-shadow: 0 8px 24px rgba(255, 184, 0, 0.2);
+        }
+        .shop-item.owned {
+            border-color: var(--success);
+            background: #00f5d408;
+        }
+        .shop-item-icon {
+            font-size: 2.2rem;
+        }
+        .shop-item-name {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+        .shop-item-desc {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+        .shop-item-price {
+            font-weight: 700;
+            color: #ffd700;
+            font-size: 0.85rem;
+        }
+        .shop-item-btn {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 18px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 0.3px;
+            transition: var(--transition);
+        }
+        .shop-item-btn:hover {
+            filter: brightness(1.3);
+            box-shadow: 0 4px 14px var(--accent-glow);
+        }
+        .shop-item-btn:active {
+            transform: scale(0.93);
+        }
+        .shop-item-btn:disabled {
+            background: #555;
+            cursor: not-allowed;
+            filter: none;
+            box-shadow: none;
+        }
+        .results-view {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .results-card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 22px 18px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-card);
+            text-align: center;
+        }
+        .results-emoji {
+            font-size: 3.5rem;
+            animation: bounceIn 0.6s ease;
+        }
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        .results-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 6px 0;
+            color: var(--text);
+        }
+        .results-score {
+            font-size: 2.6rem;
+            font-weight: 900;
+            color: var(--warning);
+            font-family: var(--font-mono);
+        }
+        .results-detail {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin: 3px 0;
+        }
+        .breakdown-section {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 16px;
+            border: 1px solid var(--border);
+        }
+        .breakdown-title {
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text);
+            font-size: 0.95rem;
+        }
+        .breakdown-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 10px;
+            border-radius: var(--radius-xs);
+            margin-bottom: 5px;
+            gap: 6px;
+            flex-wrap: wrap;
+            background: var(--surface-light);
+            border: 1px solid transparent;
+        }
+        .breakdown-item.mastered {
+            border-color: #00f5d430;
+        }
+        .breakdown-item.needs-work {
+            border-color: #ff007f30;
+        }
+        .breakdown-topic {
+            font-weight: 600;
+            font-size: 0.8rem;
+            flex: 1;
+            min-width: 120px;
+        }
+        .breakdown-status {
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 3px 9px;
+            border-radius: 10px;
+            white-space: nowrap;
+        }
+        .breakdown-status.mastered {
+            background: #00f5d418;
+            color: var(--success);
+        }
+        .breakdown-status.needs-work {
+            background: #ff007f18;
+            color: var(--danger);
+        }
+        .btn-retry {
+            background: var(--primary);
+            color: #000;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 22px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            letter-spacing: 0.4px;
+            transition: var(--transition);
+            box-shadow: var(--shadow-btn);
+            text-align: center;
+        }
+        .btn-retry:hover {
+            filter: brightness(1.2);
+            box-shadow: 0 6px 20px var(--primary-glow);
+            transform: translateY(-2px);
+        }
+        .btn-retry:active {
+            transform: scale(0.94);
+        }
+        .btn-back {
+            background: transparent;
+            border: 2px solid var(--border);
+            color: var(--text);
+            padding: 10px 20px;
+            border-radius: 22px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            letter-spacing: 0.4px;
+            transition: var(--transition);
+            text-align: center;
+        }
+        .btn-back:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        .app-footer {
+            width: 100%;
+            max-width: 860px;
+            text-align: center;
+            padding: 10px;
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            opacity: 0.7;
+            margin-top: auto;
+        }
+        @media (max-width: 600px) {
+            .app-header {
+                padding: 10px 12px;
+                gap: 6px;
+            }
+            .header-title {
+                font-size: 0.9rem;
+            }
+            .header-logo {
+                font-size: 1.4rem;
+            }
+            .stat-badge {
+                padding: 5px 8px;
+                font-size: 0.7rem;
+                gap: 3px;
+            }
+            .topic-grid {
+                grid-template-columns: 1fr;
+            }
+            .shop-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .question-text {
+                font-size: 0.95rem;
+            }
+            .option-btn {
+                padding: 10px 12px;
+                font-size: 0.85rem;
+            }
+            .results-score {
+                font-size: 2rem;
+            }
+            .btn-action {
+                font-size: 0.9rem;
+                padding: 12px 16px;
+            }
+            .diff-btn {
+                padding: 8px 14px;
+                font-size: 0.72rem;
+            }
+        }
+        @media (max-width: 380px) {
+            body {
+                padding: 6px;
+            }
+            .app-header {
+                padding: 8px;
+                border-radius: var(--radius-sm);
+            }
+            .shop-grid {
+                grid-template-columns: 1fr;
+            }
+            .header-stats {
+                gap: 4px;
+            }
+            .stat-badge {
+                padding: 4px 7px;
+                font-size: 0.65rem;
+            }
+            .option-letter {
+                width: 26px;
+                height: 26px;
+                font-size: 0.7rem;
+            }
+            .question-card {
+                padding: 14px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="app-header" id="appHeader">
+        <div class="header-brand">
+            <span class="header-logo">📜</span>
+            <div>
+                <div class="header-title">Russian Grammar Quest</div>
+                <div class="header-subtitle">Грамотный Квест</div>
+            </div>
+        </div>
+        <div class="header-stats">
+            <div class="stat-badge score-badge"><span>⭐</span> <span id="scoreDisplay">0</span></div>
+            <div class="stat-badge streak-badge inactive" id="streakBadge"><span>🔥</span> <span id="streakDisplay">0</span></div>
+            <div class="stat-badge coin-badge"><span>🪙</span> <span id="coinDisplay">0</span></div>
+        </div>
+        <div class="header-btns">
+            <button class="icon-btn active-toggle" id="soundToggle" title="Sound / Звук">🔊</button>
+            <button class="icon-btn" id="langToggle" title="Switch Language">🌐 RU</button>
+            <button class="icon-btn" id="themeCycleBtn" title="Cycle Theme">🎨</button>
+        </div>
+    </header>
+
+    <main class="main-container" id="mainContainer"></main>
+
+    <footer class="app-footer">
+        Russian Grammar Quest · Грамотный Квест · 7 Topics · 70 Questions · Bilingual · A2-B1 Level
+    </footer>
+
+    <script>
+        (function() {
+            // ==================== AUDIO ENGINE ====================
+            let audioCtx = null;
+            let soundEnabled = true;
+
+            function getAudioCtx() {
+                if (!audioCtx) {
+                    audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+                }
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                return audioCtx;
+            }
+
+            function playTone(freq, type, duration, startTime, volume = 0.18) {
+                if (!soundEnabled) return;
+                try {
+                    const ctx = getAudioCtx();
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = type;
+                    osc.frequency.setValueAtTime(freq, startTime);
+                    gain.gain.setValueAtTime(volume, startTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(startTime);
+                    osc.stop(startTime + duration);
+                } catch (e) { /* silent */ }
+            }
+
+            function playCorrectSound() {
+                if (!soundEnabled) return;
+                try {
+                    const ctx = getAudioCtx();
+                    const now = ctx.currentTime;
+                    playTone(660, 'sine', 0.12, now, 0.2);
+                    playTone(880, 'sine', 0.15, now + 0.1, 0.22);
+                    playTone(1100, 'sine', 0.18, now + 0.2, 0.18);
+                } catch (e) { /* silent */ }
+            }
+
+            function playIncorrectSound() {
+                if (!soundEnabled) return;
+                try {
+                    const ctx = getAudioCtx();
+                    const now = ctx.currentTime;
+                    playTone(150, 'square', 0.3, now, 0.2);
+                    playTone(120, 'sawtooth', 0.25, now + 0.08, 0.15);
+                } catch (e) { /* silent */ }
+            }
+
+            function playShopSound() {
+                if (!soundEnabled) return;
+                try {
+                    const ctx = getAudioCtx();
+                    const now = ctx.currentTime;
+                    playTone(800, 'sine', 0.1, now, 0.2);
+                    playTone(1200, 'sine', 0.12, now + 0.09, 0.22);
+                    playTone(1600, 'sine', 0.14, now + 0.18, 0.18);
+                } catch (e) { /* silent */ }
+            }
+
+            function playVictorySound() {
+                if (!soundEnabled) return;
+                try {
+                    const ctx = getAudioCtx();
+                    const now = ctx.currentTime;
+                    const notes = [523, 659, 784, 1047];
+                    notes.forEach((freq, i) => {
+                        playTone(freq, 'sine', 0.22, now + i * 0.16, 0.22);
+                    });
+                } catch (e) { /* silent */ }
+            }
+
+            // ==================== STATE ====================
+            const state = {
+                currentView: 'dashboard',
+                currentTopicId: null,
+                currentDifficulty: 'medium',
+                currentQuestionIndex: 0,
+                score: 0,
+                streak: 0,
+                maxStreak: 0,
+                grammarCoins: 0,
+                inventory: { fiftyFifty: 0, secondChance: 0, themeNeon: false, themeRetro: false },
+                activePowerups: { secondChanceActive: false, fiftyFiftyUsedThisQuestion: false },
+                answers: [],
+                uiLang: 'ru',
+                topicProgress: {},
+                quizQuestions: [],
+                quizTopicLabel: { ru: '', en: '' },
+                appliedTheme: '',
+            };
+
+            function loadState() {
+                try {
+                    const saved = localStorage.getItem('russianGrammarQuest_state');
+                    if (saved) {
+                        const parsed = JSON.parse(saved);
+                        state.topicProgress = parsed.topicProgress || {};
+                        state.grammarCoins = parsed.grammarCoins || 0;
+                        state.inventory = parsed.inventory || { fiftyFifty: 0, secondChance: 0, themeNeon: false,
+                            themeRetro: false };
+                        state.appliedTheme = parsed.appliedTheme || '';
+                    }
+                } catch (e) { /* ignore */ }
+            }
+
+            function saveState() {
+                try {
+                    localStorage.setItem('russianGrammarQuest_state', JSON.stringify({
+                        topicProgress: state.topicProgress,
+                        grammarCoins: state.grammarCoins,
+                        inventory: state.inventory,
+                        appliedTheme: state.appliedTheme,
+                    }));
+                } catch (e) { /* ignore */ }
+            }
+            loadState();
+            if (state.appliedTheme) document.body.classList.add(state.appliedTheme);
+
+            // ==================== HELPERS ====================
+            function t(ruText, enText) {
+                return state.uiLang === 'ru' ? ruText : enText;
+            }
+
+            function updateHeaderStats() {
+                document.getElementById('scoreDisplay').textContent = state.score;
+                document.getElementById('streakDisplay').textContent = state.streak;
+                document.getElementById('coinDisplay').textContent = state.grammarCoins;
+                const streakBadge = document.getElementById('streakBadge');
+                if (state.streak >= 3) streakBadge.classList.remove('inactive');
+                else streakBadge.classList.add('inactive');
+                document.getElementById('soundToggle').textContent = soundEnabled ? '🔊' : '🔇';
+                if (!soundEnabled) document.getElementById('soundToggle').classList.remove('active-toggle');
+                else document.getElementById('soundToggle').classList.add('active-toggle');
+            }
+
+            function resetSession() {
+                state.currentQuestionIndex = 0;
+                state.answers = [];
+                state.quizQuestions = [];
+                state.quizTopicLabel = { ru: '', en: '' };
+                state.currentTopicId = null;
+                state.activePowerups = { secondChanceActive: false, fiftyFiftyUsedThisQuestion: false };
+                state.streak = 0;
+                state.maxStreak = 0;
+            }
+
+            // ==================== QUESTION DATABASE (70 questions, 7 topics × 10) ====================
+            const topics = [{
+                id: 'noun-cases',
+                icon: '📖',
+                name: { ru: 'Падежи существительных', en: 'Noun Cases' },
+                desc: { ru: 'Родительный vs Винительный vs Предложный', en: 'Genitive vs Accusative vs Prepositional' },
+                questions: [
+                    { q: { ru: 'Я не вижу ___ (стол).', en: 'I don\'t see the ___.' }, options: ['стола',
+                            'стол', 'столу', 'столе'
+                        ], correct: 0, difficulty: 'easy', explanation: { ru: 'После отрицания "не вижу" используется родительный падеж: не вижу (кого? чего?) стола.',
+                            en: 'After negation "не вижу", use Genitive case: не вижу (кого? чего?) стола.' } },
+                    { q: { ru: 'Она мечтает о ___ (море).', en: 'She dreams about the ___.' }, options: [
+                            'море', 'моря', 'морю', 'морем'
+                        ], correct: 0, difficulty: 'easy', explanation: { ru: 'Предлог "о" требует предложного падежа: о (ком? чём?) море.',
+                            en: 'Preposition "о" requires Prepositional case: о (ком? чём?) море.' } },
+                    { q: { ru: 'У ___ (брат) новая машина.', en: 'My ___ has a new car.' }, options: [
+                            'брата', 'брат', 'брату', 'братом'
+                        ], correct: 0, difficulty: 'easy', explanation: { ru: 'Конструкция "у + род. падеж" обозначает принадлежность: у (кого?) брата.',
+                            en: 'Construction "у + Genitive" indicates possession: у (кого?) брата.' } },
+                    { q: { ru: 'Я иду в ___ (школа).', en: 'I\'m going to ___.' }, options: ['школу',
+                            'школы', 'школе', 'школой'
+                        ], correct: 0, difficulty: 'easy', explanation: { ru: 'Предлог "в" с направлением требует винительного падежа: в (кого? что?) школу.',
+                            en: 'Preposition "в" with direction requires Accusative case: в (кого? что?) школу.' } },
+                    { q: { ru: 'Нет ___ (время) на это.', en: 'There\'s no ___ for this.' }, options: [
+                            'времени', 'время', 'временим', 'временем'
+                        ], correct: 0, difficulty: 'medium', explanation: { ru: 'Слово "время" — разносклоняемое. В родительном падеже: нет (чего?) времени.',
+                            en: '"Время" is an irregular neuter noun. Genitive: нет (чего?) времени.' } },
+                    { q: { ru: 'Мы говорили о ___ (жизнь).', en: 'We talked about ___.' }, options: [
+                            'жизни', 'жизнь', 'жизнью', 'жизней'
+                        ], correct: 0, difficulty: 'medium', explanation: { ru: 'Предлог "о" + предложный падеж: о (ком? чём?) жизни. Существительное 3-го склонения.',
+                            en: 'Preposition "о" + Prepositional: о жизни. 3rd declension feminine noun.' } },
+                    { q: { ru: 'Он добился ___ (успех).', en: 'He achieved ___.' }, options: ['успеха',
+                            'успех', 'успеху', 'успехом'
+                        ], correct: 0, difficulty: 'medium', explanation: { ru: 'Глагол "добился" требует родительного падежа: добился (кого? чего?) успеха.',
+                            en: 'Verb "добился" requires Genitive: добился (кого? чего?) успеха.' } },
+                    { q: { ru: 'Я горжусь ___ (дочь).', en: 'I\'m proud of my ___.' }, options: ['дочерью',
+                            'дочь', 'дочери', 'дочерям'
+                        ], correct: 0, difficulty: 'medium', explanation: { ru: 'Глагол "горжусь" требует творительного падежа: горжусь (кем? чем?) дочерью.',
+                            en: 'Verb "горжусь" requires Instrumental: горжусь (кем? чем?) дочерью.' } },
+                    { q: { ru: 'Среди ___ (деревья) было тихо.', en: 'It was quiet among the ___.' },
+                        options: ['деревьев', 'деревья', 'деревьям', 'деревьями'], correct: 0,
+                        difficulty: 'hard', explanation: { ru: 'Предлог "среди" требует родительного падежа множественного числа: среди (кого? чего?) деревьев.',
+                            en: 'Preposition "среди" requires Genitive plural: среди деревьев.' } },
+                    { q: { ru: 'Благодаря ___ (помощь) мы справились.', en: 'Thanks to the ___, we managed.' },
+                        options: ['помощи', 'помощь', 'помощью', 'помощей'], correct: 0,
+                    difficulty: 'hard', explanation: { ru: 'Предлог "благодаря" требует дательного падежа: благодаря (кому? чему?) помощи.',
+                        en: 'Preposition "благодаря" requires Dative: благодаря помощи.' } }
+                ]
+            }, {
+                id: 'verb-aspects',
+                icon: '⚡',
+                name: { ru: 'Виды глагола', en: 'Verb Aspects' },
+                desc: { ru: 'Совершенный vs Несовершенный вид', en: 'Perfective vs Imperfective' },
+                questions: [
+                    { q: { ru: 'Я ___ книгу каждый вечер.', en: 'I ___ a book every evening.' }, options: [
+                            'читаю', 'прочитаю', 'прочитал', 'почитаю'
+                        ], correct: 0, difficulty: 'easy', explanation: { ru: 'Регулярное действие → несовершенный вид: читаю (что делаю?).',
+                            en: 'Regular action → Imperfective: читаю (what am I doing?).' } },
+                    { q: { ru: 'Завтра я обязательно ___ эту статью.', en: 'Tomorrow I will definitely ___ this article.' },
+                        options: ['прочитаю', 'читаю', 'почитаю', 'читал'], correct: 0,
+                    difficulty: 'easy', explanation: { ru: 'Результат в будущем → совершенный вид: прочитаю (что сделаю?).',
+                        en: 'Future result → Perfective: прочитаю (what will I accomplish?).' } },
+                    { q: { ru: 'Он ___ письмо уже два часа.', en: 'He has been ___ the letter for two hours.' },
+                        options: ['пишет', 'напишет', 'написал', 'писает'], correct: 0,
+                    difficulty: 'easy', explanation: { ru: 'Процесс, длящийся во времени → несовершенный вид: пишет (что делает?).',
+                        en: 'Ongoing process → Imperfective: пишет (what is he doing?).' } },
+                    { q: { ru: 'Я ___ все задачи до вечера.', en: 'I ___ all tasks by evening.' },
+                        options: ['решил', 'решал', 'решаю', 'порешал'], correct: 0,
+                    difficulty: 'easy', explanation: { ru: 'Завершённое действие с результатом → совершенный вид: решил (что сделал?).',
+                        en: 'Completed action with result → Perfective: решил (what did I accomplish?).' } },
+                    { q: { ru: 'Когда я ___ домой, начался дождь.', en: 'When I was ___ home, it started raining.' },
+                        options: ['шёл', 'пошёл', 'пришёл', 'иду'], correct: 0,
+                    difficulty: 'medium', explanation: { ru: 'Фоновое действие в прошлом → несовершенный вид: шёл (что делал?).',
+                        en: 'Background action in past → Imperfective: шёл (what was I doing?).' } },
+                    { q: { ru: 'Она ___ цветы и поставила их в вазу.', en: 'She ___ flowers and put them in a vase.' },
+                        options: ['купила', 'покупала', 'купала', 'покупила'], correct: 0,
+                        difficulty: 'medium', explanation: { ru: 'Завершённое однократное действие → совершенный вид: купила (что сделала?).',
+                            en: 'Completed single action → Perfective: купила.' } },
+                    { q: { ru: 'Не ___ меня, когда я работаю!', en: 'Don\'t ___ me when I\'m working!' },
+                        options: ['отвлекай', 'отвлеки', 'отвлёк', 'отвлекаешь'], correct: 0,
+                        difficulty: 'medium', explanation: { ru: 'Запрет на длительное действие → несовершенный вид в императиве: не отвлекай.',
+                            en: 'Prohibition of ongoing action → Imperfective imperative: не отвлекай.' } },
+                    { q: { ru: 'Я ___ эту статью вчера весь день.', en: 'I was ___ this article all day yesterday.' },
+                        options: ['писал', 'написал', 'писаю', 'напишу'], correct: 0,
+                    difficulty: 'medium', explanation: { ru: 'Длительное действие в прошлом без указания на результат → несовершенный вид: писал.',
+                        en: 'Prolonged past action without result emphasis → Imperfective: писал.' } },
+                    { q: { ru: 'Ему удалось ___ трудную задачу.', en: 'He managed to ___ a difficult problem.' },
+                        options: ['решить', 'решать', 'решит', 'решал'], correct: 0,
+                    difficulty: 'hard', explanation: { ru: '"Удалось" + инфинитив совершенного вида: удалось (что сделать?) решить.',
+                        en: '"Удалось" + Perfective infinitive: managed to solve.' } },
+                    { q: { ru: 'Я привык ___ рано по утрам.', en: 'I got used to ___ early in the mornings.' },
+                        options: ['вставать', 'встать', 'вставал', 'встану'], correct: 0,
+                    difficulty: 'hard', explanation: { ru: '"Привык" + инфинитив несовершенного вида: привык (что делать?) вставать.',
+                        en: '"Привык" + Imperfective infinitive: got used to getting up.' } }
+                ]
+            }, {
+                id: 'verbs-of-motion',
+                icon: '🚶',
+                name: { ru: 'Глаголы движения', en: 'Verbs of Motion' },
+                desc: { ru: 'Идти/Ходить, Ехать/Ездить', en: 'Unidirectional vs Multidirectional' },
+                questions: [
+                    { q: { ru: 'Я ___ в школу каждый день.', en: 'I ___ to school every day.' },
+                        options: ['хожу', 'иду', 'пойду', 'шёл'], correct: 0, difficulty: 'easy',
+                        explanation: { ru: 'Регулярное повторяющееся движение → ходить (разнонаправленное).',
+                            en: 'Regular repeated motion → ходить (multidirectional).' } },
+                    { q: { ru: 'Смотри! Она ___ по улице.', en: 'Look! She is ___ down the street.' },
+                        options: ['идёт', 'ходит', 'пошла', 'шла'], correct: 0, difficulty: 'easy',
+                        explanation: { ru: 'Движение в конкретном направлении сейчас → идти (однонаправленное).',
+                            en: 'Movement in a specific direction now → идти (unidirectional).' } },
+                    { q: { ru: 'Он ___ на поезде в Москву завтра.', en: 'He is ___ by train to Moscow tomorrow.' },
+                        options: ['едет', 'ездит', 'поехал', 'ехал'], correct: 0,
+                    difficulty: 'easy', explanation: { ru: 'Конкретная поездка в одном направлении → ехать.',
+                        en: 'Specific trip in one direction → ехать (unidirectional).' } },
+                    { q: { ru: 'Мой брат часто ___ в командировки.', en: 'My brother often ___ on business trips.' },
+                        options: ['ездит', 'едет', 'поедет', 'ехал'], correct: 0,
+                    difficulty: 'easy', explanation: { ru: 'Повторяющееся движение туда-сюда → ездить (разнонаправленное).',
+                        en: 'Repeated round-trip motion → ездить (multidirectional).' } },
+                    { q: { ru: 'Птица ___ над озером кругами.', en: 'The bird is ___ in circles over the lake.' },
+                        options: ['летает', 'летит', 'полетит', 'летела'], correct: 0,
+                        difficulty: 'medium', explanation: { ru: 'Движение не по прямой, кругами → летать (разнонаправленное).',
+                            en: 'Non-linear motion, circling → летать (multidirectional).' } },
+                    { q: { ru: 'Самолёт ___ из Москвы в Сочи.', en: 'The plane is ___ from Moscow to Sochi.' },
+                        options: ['летит', 'летает', 'полетел', 'летал'], correct: 0,
+                        difficulty: 'medium', explanation: { ru: 'Прямой рейс в одном направлении → лететь (однонаправленное).',
+                            en: 'Direct flight in one direction → лететь (unidirectional).' } },
+                    { q: { ru: 'Я ___ по магазинам всё утро.', en: 'I was ___ around the shops all morning.' },
+                        options: ['ходил', 'шёл', 'пошёл', 'иду'], correct: 0,
+                    difficulty: 'medium', explanation: { ru: 'Движение по разным местам без единого направления → ходил.',
+                        en: 'Movement around various places → ходил (multidirectional past).' } },
+                    { q: { ru: 'Когда я ___ домой, я встретил друга.', en: 'When I was ___ home, I met a friend.' },
+                        options: ['шёл', 'ходил', 'пошёл', 'иду'], correct: 0,
+                    difficulty: 'medium', explanation: { ru: 'Однонаправленное движение в прошлом в конкретный момент → шёл.',
+                        en: 'Unidirectional past movement at a specific moment → шёл.' } },
+                    { q: { ru: 'Он ___ из комнаты, ничего не сказав.', en: 'He ___ out of the room without saying anything.' },
+                        options: ['вышел', 'выходил', 'вышел бы', 'выходит'], correct: 0,
+                        difficulty: 'hard', explanation: { ru: 'Однократное завершённое действие с приставкой вы- → вышел (сов. вид).',
+                            en: 'Single completed action with prefix вы- → вышел (perfective).' } },
+                    { q: { ru: 'Мы ___ весь город пешком за день.', en: 'We ___ the entire city on foot in a day.' },
+                        options: ['обошли', 'шли', 'ходили', 'пошли'], correct: 0,
+                    difficulty: 'hard', explanation: { ru: 'Охват всей территории с приставкой об- → обошли (сов. вид, завершённое).',
+                        en: 'Covering entire area with prefix об- → обошли (perfective, completed).' } }
+                ]
+            }, {
+                id: 'adjective-declension',
+                icon: '🎨',
+                name: { ru: 'Склонение прилагательных', en: 'Adjective Declension' },
+                desc: { ru: 'Падежные окончания прилагательных', en: 'Case endings of adjectives' },
+                questions: [
+                    { q: { ru: 'Я вижу ___ (красивый) дом.', en: 'I see a ___ house.' }, options: [
+                            'красивый', 'красивого', 'красивому', 'красивым'
+                        ], correct: 0, difficulty: 'easy', explanation: { ru: 'Винительный падеж неодушевлённого = именительный: вижу (какой?) красивый дом.',
+                            en: 'Accusative inanimate = Nominative: вижу красивый дом.' } },
+                    { q: { ru: 'У ___ (хороший) друга много книг.', en: 'My ___ friend has many books.' },
+                        options: ['хорошего', 'хороший', 'хорошему', 'хорошим'], correct: 0,
+                        difficulty: 'easy', explanation: { ru: 'Родительный падеж: у (какого?) хорошего друга.',
+                            en: 'Genitive case: у хорошего друга.' } },
+                    { q: { ru: 'Я живу в ___ (новый) квартире.', en: 'I live in a ___ apartment.' },
+                        options: ['новой', 'новая', 'новую', 'новый'], correct: 0,
+                    difficulty: 'easy', explanation: { ru: 'Предложный падеж, женский род: в (какой?) новой квартире.',
+                        en: 'Prepositional case, feminine: в новой квартире.' } },
+                    { q: { ru: 'Мы говорим о ___ (последний) событиях.', en: 'We talk about ___ events.' },
+                        options: ['последних', 'последние', 'последним', 'последними'], correct: 0,
+                        difficulty: 'easy', explanation: { ru: 'Предложный падеж, мн. число: о (каких?) последних событиях.',
+                            en: 'Prepositional plural: о последних событиях.' } },
+                    { q: { ru: 'Она дружит с ___ (старший) братом.', en: 'She is friends with her ___ brother.' },
+                        options: ['старшим', 'старший', 'старшего', 'старшему'], correct: 0,
+                        difficulty: 'medium', explanation: { ru: 'Творительный падеж: с (каким?) старшим братом.',
+                            en: 'Instrumental case: с старшим братом.' } },
+                    { q: { ru: 'Нет ___ (свободный) времени.', en: 'There is no ___ time.' },
+                        options: ['свободного', 'свободный', 'свободному', 'свободным'], correct: 0,
+                        difficulty: 'medium', explanation: { ru: 'Родительный падеж, мужской род: нет (какого?) свободного времени.',
+                            en: 'Genitive masculine: нет свободного времени.' } },
+                    { q: { ru: 'Я восхищаюсь ___ (русский) культурой.', en: 'I admire ___ culture.' },
+                        options: ['русской', 'русская', 'русскую', 'русский'], correct: 0,
+                        difficulty: 'medium', explanation: { ru: 'Творительный падеж, женский род: восхищаюсь (какой?) русской культурой.',
+                            en: 'Instrumental feminine: восхищаюсь русской культурой.' } },
+                    { q: { ru: 'В ___ (синий) небе светило солнце.', en: 'The sun shone in the ___ sky.' },
+                        options: ['синем', 'синий', 'синего', 'синему'], correct: 0,
+                    difficulty: 'medium', explanation: { ru: 'Предложный падеж, средний род: в (каком?) синем небе.',
+                        en: 'Prepositional neuter: в синем небе.' } },
+                    { q: { ru: 'По ___ (широкий) улице шли люди.', en: 'People walked along the ___ street.' },
+                        options: ['широкой', 'широкая', 'широкую', 'широкий'], correct: 0,
+                        difficulty: 'hard', explanation: { ru: 'Дательный падеж с предлогом "по", женский род: по (какой?) широкой улице.',
+                            en: 'Dative with "по", feminine: по широкой улице.' } },
+                    { q: { ru: 'Между ___ (высокий) зданиями была площадь.', en: 'There was a square between the ___ buildings.' },
+                        options: ['высокими', 'высокие', 'высоких', 'высоким'], correct: 0,
+                        difficulty: 'hard', explanation: { ru: 'Творительный падеж с предлогом "между", мн. число: между (какими?) высокими зданиями.',
+                            en: 'Instrumental with "между", plural: между высокими зданиями.' } }
+                ]
+            }, {
+                id: 'prepositions-cases',
+                icon: '🔗',
+                name: { ru: 'Предлоги и падежи', en: 'Prepositions & Cases' },
+                desc: { ru: 'Какой падеж после предлога', en: 'Which case follows a preposition' },
+                questions: [
+                    { q: { ru: 'Я еду ___ (в) Москву.', en: 'I\'m going ___ Moscow.' }, options: ['в',
+                            'на', 'к', 'по'
+                        ], correct: 0, difficulty: 'easy', explanation: { ru: 'С городами используется предлог "в" + винительный падеж: в Москву.',
+                            en: 'With cities, use "в" + Accusative: в Москву.' } },
+                    { q: { ru: 'Книга лежит ___ (на) столе.', en: 'The book is ___ the table.' },
+                        options: ['на', 'в', 'по', 'над'], correct: 0, difficulty: 'easy',
+                        explanation: { ru: 'Предлог "на" + предложный падеж для обозначения места на поверхности: на столе.',
+                            en: 'Preposition "на" + Prepositional for location on a surface: на столе.' } },
+                    { q: { ru: 'Я пришёл ___ (из) магазина.', en: 'I came ___ the shop.' },
+                        options: ['из', 'с', 'от', 'в'], correct: 0, difficulty: 'easy',
+                        explanation: { ru: '"Из" + родительный падеж для движения изнутри: из магазина. Пара "в" ↔ "из".',
+                            en: '"Из" + Genitive for movement from inside: из магазина. Pair: "в" ↔ "из".' } },
+                    { q: { ru: 'Я вернулся ___ (с) работы.', en: 'I returned ___ work.' },
+                        options: ['с', 'из', 'от', 'на'], correct: 0, difficulty: 'easy',
+                        explanation: { ru: '"С" + родительный падеж для движения с поверхности/мероприятия: с работы. Пара "на" ↔ "с".',
+                            en: '"С" + Genitive for movement from surface/event: с работы. Pair: "на" ↔ "с".' } },
+                    { q: { ru: 'Мы встретились ___ (у) метро.', en: 'We met ___ the metro.' },
+                        options: ['у', 'в', 'на', 'к'], correct: 0, difficulty: 'medium',
+                        explanation: { ru: '"У" + родительный падеж для обозначения места рядом с объектом: у метро.',
+                            en: '"У" + Genitive for location near an object: у метро.' } },
+                    { q: { ru: 'Он подошёл ___ (к) окну.', en: 'He approached ___ the window.' },
+                        options: ['к', 'в', 'на', 'по'], correct: 0, difficulty: 'medium',
+                        explanation: { ru: '"К" + дательный падеж для движения по направлению к объекту: к окну.',
+                            en: '"К" + Dative for movement towards an object: к окну.' } },
+                    { q: { ru: 'Я гуляю ___ (по) парку.', en: 'I\'m walking ___ the park.' },
+                        options: ['по', 'в', 'на', 'через'], correct: 0, difficulty: 'medium',
+                        explanation: { ru: '"По" + дательный падеж для движения по поверхности/территории: по парку.',
+                            en: '"По" + Dative for movement across an area: по парку.' } },
+                    { q: { ru: 'Он ударил ___ (об) стол кулаком.', en: 'He hit his fist ___ the table.' },
+                        options: ['об', 'о', 'в', 'на'], correct: 0, difficulty: 'medium',
+                        explanation: { ru: '"Об" + винительный падеж при столкновении (перед гласными — "об"): об стол.',
+                            en: '"Об" + Accusative for collision (before consonants — "о", before vowels — "об").' } },
+                    { q: { ru: 'Ради ___ (дети) она готова на всё.', en: 'For the sake of the ___, she\'s ready for anything.' },
+                        options: ['детей', 'детям', 'дети', 'детьми'], correct: 0,
+                    difficulty: 'hard', explanation: { ru: '"Ради" + родительный падеж: ради (кого? чего?) детей.',
+                        en: '"Ради" + Genitive: ради детей.' } },
+                    { q: { ru: 'Спустя ___ (год) всё изменилось.', en: 'A ___ later, everything changed.' },
+                        options: ['год', 'года', 'году', 'годом'], correct: 0,
+                    difficulty: 'hard', explanation: { ru: '"Спустя" + винительный падеж: спустя (кого? что?) год.',
+                        en: '"Спустя" + Accusative: спустя год.' } }
+                ]
+            }, {
+                id: 'numerals',
+                icon: '🔢',
+                name: { ru: 'Числительные', en: 'Numerals' },
+                desc: { ru: 'Согласование с существительными', en: 'Agreement with nouns' },
+                questions: [
+                    { q: { ru: 'У меня ___ (2) книги.', en: 'I have ___ books.' }, options: ['две',
+                            'два', 'двое', 'оба'
+                        ], correct: 0, difficulty: 'easy', explanation: { ru: 'Числительное "две" для женского рода: две книги.',
+                            en: 'Numeral "две" for feminine gender: две книги.' } },
+                    { q: { ru: 'Здесь ___ (3) стола.', en: 'There are ___ tables here.' },
+                        options: ['три', 'трое', 'трие', 'тремя'], correct: 0, difficulty: 'easy',
+                        explanation: { ru: '"Три" + родительный падеж единственного числа: три стола.',
+                            en: '"Три" + Genitive singular: три стола.' } },
+                    { q: { ru: 'Прошло ___ (5) дней.', en: '___ days passed.' }, options: ['пять',
+                            'пятеро', 'пяти', 'пятью'
+                        ], correct: 0, difficulty: 'easy', explanation: { ru: '"Пять" + родительный падеж множественного числа: пять дней.',
+                            en: '"Пять" + Genitive plural: пять дней.' } },
+                    { q: { ru: 'Ей ___ (21) год.', en: 'She is ___ years old.' }, options: [
+                            'двадцать один', 'двадцать одно', 'двадцать одна', 'двадцать одни'
+                        ], correct: 0, difficulty: 'easy', explanation: { ru: 'Составное числительное на "один" → ед. число: двадцать один год.',
+                            en: 'Compound numeral ending in "один" → singular: двадцать один год.' } },
+                    { q: { ru: 'У меня ___ (2) друзей.', en: 'I have ___ friends (both male).' },
+                        options: ['два', 'две', 'двое', 'оба'], correct: 0, difficulty: 'medium',
+                        explanation: { ru: '"Два" для мужского рода: два друга (не "двое" без собирательного контекста).',
+                            en: '"Два" for masculine: два друга.' } },
+                    { q: { ru: '___ (Оба) студента сдали экзамен.', en: '___ students passed the exam.' },
+                        options: ['Оба', 'Обе', 'Два', 'Двое'], correct: 0,
+                    difficulty: 'medium', explanation: { ru: '"Оба" для мужского рода: оба студента. "Обе" — для женского.',
+                        en: '"Оба" for masculine: оба студента. "Обе" for feminine.' } },
+                    { q: { ru: 'Я вижу ___ (4) девушек.', en: 'I see ___ girls.' }, options: [
+                            'четырёх', 'четыре', 'четверо', 'четырьмя'
+                        ], correct: 0, difficulty: 'medium', explanation: { ru: 'Винительный падеж одушевлённого с числительным: вижу (кого?) четырёх девушек.',
+                            en: 'Accusative animate with numeral: вижу четырёх девушек.' } },
+                    { q: { ru: 'С ___ (3) друзьями мы пошли в кино.', en: 'With ___ friends we went to the cinema.' },
+                        options: ['тремя', 'три', 'троими', 'трёх'], correct: 0,
+                    difficulty: 'medium', explanation: { ru: 'Творительный падеж: с (кем? чем?) тремя друзьями.',
+                        en: 'Instrumental case: с тремя друзьями.' } },
+                    { q: { ru: '___ (Обе) сестры пришли.', en: '___ sisters came.' }, options: ['Обе',
+                            'Оба', 'Две', 'Двое'
+                        ], correct: 0, difficulty: 'hard', explanation: { ru: '"Обе" для женского рода: обе сестры.',
+                            en: '"Обе" for feminine: обе сестры.' } },
+                    { q: { ru: 'У ___ (тысяча) людей была возможность.', en: 'A ___ people had the opportunity.' },
+                        options: ['тысячи', 'тысяча', 'тысяч', 'тысячей'], correct: 0,
+                        difficulty: 'hard', explanation: { ru: 'Родительный падеж: у (кого? чего?) тысячи людей.',
+                            en: 'Genitive case: у тысячи людей.' } }
+                ]
+            }, {
+                id: 'pronouns-reflexive',
+                icon: '🪞',
+                name: { ru: 'Местоимения и возвратные глаголы', en: 'Pronouns & Reflexive Verbs' },
+                desc: { ru: 'Себя, свой, -ся, личные местоимения', en: 'Себя, свой, -ся, personal pronouns' },
+                questions: [
+                    { q: { ru: 'Я купил ___ (себя) новую книгу.', en: 'I bought ___ a new book.' },
+                        options: ['себе', 'себя', 'собой', 'свой'], correct: 0, difficulty: 'easy',
+                        explanation: { ru: 'Дательный падеж возвратного местоимения: купил (кому?) себе.',
+                            en: 'Dative of reflexive pronoun: купил себе.' } },
+                    { q: { ru: 'Она гордится ___ (себя).', en: 'She is proud of ___.' }, options: [
+                            'собой', 'себя', 'себе', 'своей'
+                        ], correct: 0, difficulty: 'easy', explanation: { ru: 'Творительный падеж: гордится (кем? чем?) собой.',
+                            en: 'Instrumental: гордится собой.' } },
+                    { q: { ru: 'Я люблю ___ (свой) страну.', en: 'I love ___ country.' }, options: [
+                            'свою', 'мою', 'своя', 'своей'
+                        ], correct: 0, difficulty: 'easy', explanation: { ru: 'Местоимение "свой" указывает на принадлежность подлежащему: люблю (чью?) свою страну.',
+                            en: '"Свой" refers back to the subject: люблю свою страну.' } },
+                    { q: { ru: 'Он ___ (мыть) руки перед едой.', en: 'He ___ hands before eating.' },
+                        options: ['моет', 'моется', 'мыл', 'помыл'], correct: 0, difficulty: 'easy',
+                        explanation: { ru: 'Переходный глагол без -ся: моет (кого? что?) руки. "Мыться" — мыть себя.',
+                            en: 'Transitive verb without -ся: моет руки. "Мыться" = to wash oneself.' } },
+                    { q: { ru: 'Он ___ (мыться) каждое утро.', en: 'He ___ every morning.' },
+                        options: ['моется', 'моет', 'мыл', 'помылся'], correct: 0,
+                    difficulty: 'medium', explanation: { ru: 'Возвратный глагол: моется = моет себя.',
+                        en: 'Reflexive verb: моется = washes himself.' } },
+                    { q: { ru: 'Познай ___ (себя).', en: 'Know ___.' }, options: ['себя', 'себе',
+                            'собой', 'свой'
+                        ], correct: 0, difficulty: 'medium', explanation: { ru: 'Винительный падеж: познай (кого? что?) себя.',
+                            en: 'Accusative: познай себя.' } },
+                    { q: { ru: 'Возьми ___ (свой) вещи!', en: 'Take ___ things!' }, options: ['свои',
+                            'твои', 'ваши', 'своих'
+                        ], correct: 0, difficulty: 'medium', explanation: { ru: '"Свои" указывает на принадлежность субъекту действия: возьми (чьи?) свои вещи.',
+                            en: '"Свои" indicates belonging to the subject: take your own things.' } },
+                    { q: { ru: 'Мы встретились ___ (друг) на вокзале.', en: 'We met ___ at the station.' },
+                        options: ['друг с другом', 'друг друга', 'друг другу', 'друг о друге'], correct: 0,
+                        difficulty: 'medium', explanation: { ru: 'Взаимное местоимение: встретились (с кем?) друг с другом.',
+                            en: 'Reciprocal pronoun: встретились друг с другом.' } },
+                    { q: { ru: 'Он всегда думает только о ___ (себя).', en: 'He always thinks only about ___.' },
+                        options: ['себе', 'себя', 'собой', 'своём'], correct: 0,
+                    difficulty: 'hard', explanation: { ru: 'Предложный падеж: думает о (ком? чём?) себе.',
+                        en: 'Prepositional: думает о себе.' } },
+                    { q: { ru: 'Я не доволен ___ (себя).', en: 'I\'m not satisfied with ___.' },
+                        options: ['собой', 'себя', 'себе', 'своим'], correct: 0,
+                    difficulty: 'hard', explanation: { ru: 'Творительный падеж: доволен (кем? чем?) собой.',
+                        en: 'Instrumental: доволен собой.' } }
+                ]
+            }];
+
+            // ==================== DOM REFS ====================
+            const mainContainer = document.getElementById('mainContainer');
+            const soundToggle = document.getElementById('soundToggle');
+            const langToggle = document.getElementById('langToggle');
+            const themeCycleBtn = document.getElementById('themeCycleBtn');
+
+            // ==================== AUDIO TOGGLE ====================
+            soundToggle.addEventListener('click', () => {
+                soundEnabled = !soundEnabled;
+                updateHeaderStats();
+            });
+
+            // ==================== LANGUAGE TOGGLE ====================
+            langToggle.addEventListener('click', () => {
+                state.uiLang = state.uiLang === 'ru' ? 'en' : 'ru';
+                langToggle.textContent = state.uiLang === 'ru' ? '🌐 RU' : '🌐 EN';
+                rerenderCurrentView();
+            });
+
+            // ==================== THEME CYCLE ====================
+            themeCycleBtn.addEventListener('click', () => {
+                const themes = ['', 'theme-neon', 'theme-retro-paper'];
+                const currentIdx = themes.indexOf(state.appliedTheme);
+                const nextIdx = (currentIdx + 1) % themes.length;
+                document.body.classList.remove(...themes);
+                state.appliedTheme = themes[nextIdx];
+                if (state.appliedTheme) document.body.classList.add(state.appliedTheme);
+                saveState();
+            });
+
+            function rerenderCurrentView() {
+                switch (state.currentView) {
+                    case 'dashboard':
+                        renderDashboard();
+                        break;
+                    case 'quiz':
+                        renderQuizQuestion();
+                        break;
+                    case 'shop':
+                        renderShop();
+                        break;
+                    case 'results':
+                        renderResultsFromState();
+                        break;
+                    default:
+                        renderDashboard();
+                }
+            }
+
+            // ==================== RENDER DASHBOARD ====================
+            function renderDashboard() {
+                state.currentView = 'dashboard';
+                resetSession();
+                updateHeaderStats();
+                let cardsHTML = '';
+                topics.forEach(topic => {
+                    const progress = state.topicProgress[topic.id];
+                    const completed = progress && progress.completed;
+                    const bestScore = progress ? progress.bestScore : 0;
+                    const totalQ = topic.questions.length;
+                    const cardClass = completed ? 'topic-card completed' : 'topic-card';
+                    const scoreHTML = completed ?
+                        `<span class="topic-score">🏆 ${bestScore}/${totalQ * 10} очк.</span>` :
+                        `<span class="topic-meta">${totalQ} ${t('вопросов', 'questions')}</span>`;
+                    cardsHTML += `
+                <div class="${cardClass}" data-topic-id="${topic.id}" onclick="window._selectTopic('${topic.id}')">
+                  <span class="topic-icon">${topic.icon}</span>
+                  <div class="topic-name">${topic.name.ru}</div>
+                  <div class="topic-name-ru">${topic.name.en}</div>
+                  <div class="topic-meta">${topic.desc.ru}</div>
+                  ${scoreHTML}
+                </div>`;
+                });
+                const diffLabels = [
+                    { id: 'easy', ru: '🟢 Лёгкий', en: '🟢 Easy' },
+                    { id: 'medium', ru: '🟡 Средний', en: '🟡 Medium' },
+                    { id: 'hard', ru: '🔴 Сложный', en: '🔴 Hard' },
+                ];
+                let diffHTML = '';
+                diffLabels.forEach(d => {
+                    const sel = state.currentDifficulty === d.id ? ' selected' : '';
+                    diffHTML +=
+                        `<button class="diff-btn${sel}" data-diff="${d.id}" onclick="window._setDifficulty('${d.id}')">${t(d.ru, d.en)}</button>`;
+                });
+                mainContainer.innerHTML = `
+              <div class="dashboard">
+                <div class="dash-title">${t('📜 Выберите тему', '📜 Choose a Topic')}</div>
+                <div class="dash-subtitle">${t('7 тем · 70 вопросов · Двуязычные пояснения', '7 topics · 70 questions · Bilingual explanations')}</div>
+                <div class="difficulty-selector">${diffHTML}</div>
+                <div class="topic-grid">${cardsHTML}</div>
+                <button class="btn-action" onclick="window._startMixedChallenge()">🎲 ${t('Смешанный вызов', 'Mixed Challenge')}</button>
+                <button class="btn-action btn-shop" onclick="window._openShop()">🛒 ${t('Магазин бонусов', 'Bonus Shop')}</button>
+              </div>`;
+            }
+
+            window._setDifficulty = function(diff) {
+                state.currentDifficulty = diff;
+                renderDashboard();
+            };
+
+            // ==================== START QUIZ ====================
+            function startQuiz(topicId, labelRu, labelEn, questions) {
+                state.currentView = 'quiz';
+                state.currentTopicId = topicId;
+                state.currentQuestionIndex = 0;
+                state.answers = [];
+                state.quizQuestions = [...questions];
+                state.quizTopicLabel = { ru: labelRu, en: labelEn };
+                state.streak = 0;
+                state.maxStreak = 0;
+                state.activePowerups = { secondChanceActive: false, fiftyFiftyUsedThisQuestion: false };
+                updateHeaderStats();
+                renderQuizQuestion();
+            }
+
+            function renderQuizQuestion() {
+                const idx = state.currentQuestionIndex;
+                const total = state.quizQuestions.length;
+                const qData = state.quizQuestions[idx];
+                const progressPercent = Math.round((idx / total) * 100);
+                const topicLabel = t(state.quizTopicLabel.ru, state.quizTopicLabel.en);
+                const letters = ['A', 'B', 'C', 'D'];
+                state.activePowerups.fiftyFiftyUsedThisQuestion = false;
+                let optionsHTML = '';
+                qData.options.forEach((opt, i) => {
+                    optionsHTML += `
+                <button class="option-btn" data-option-index="${i}" id="optBtn${i}" onclick="window._selectAnswer(${i})">
+                  <span class="option-letter">${letters[i]}</span>
+                  <span>${opt}</span>
+                </button>`;
+                });
+                const fiftyLeft = state.inventory.fiftyFifty || 0;
+                const scLeft = state.inventory.secondChance || 0;
+                mainContainer.innerHTML = `
+              <div class="quiz-view">
+                <div class="quiz-header">
+                  <span class="quiz-topic-label">${topicLabel}</span>
+                  <span class="quiz-progress-text">${t('Вопрос', 'Question')} ${idx + 1} / ${total}</span>
+                  <span style="font-size:0.7rem;color:var(--text-secondary);">${t('Сложность', 'Difficulty')}: ${t({easy:'Лёгкий',medium:'Средний',hard:'Сложный'}[qData.difficulty], qData.difficulty)}</span>
+                </div>
+                <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${progressPercent}%;"></div></div>
+                <div class="question-card" id="questionCard">
+                  <div class="question-num">${t('Вопрос', 'Question')} #${idx + 1}</div>
+                  <div class="question-text">${qData.q.ru}</div>
+                  <div class="question-text-ru">${qData.q.en}</div>
+                  <div class="options-list" id="optionsList">${optionsHTML}</div>
+                  <div class="explanation-panel" id="explanationPanel">
+                    <div class="explanation-ru" id="explanationRu"></div>
+                    <div class="explanation-en" id="explanationEn"></div>
+                  </div>
+                  <button class="btn-next" id="btnNext" onclick="window._goToNext()">${t('Далее →', 'Next →')}</button>
+                  <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;" id="powerupBar">
+                    <button class="icon-btn" id="btn5050" onclick="window._useFiftyFifty()" ${fiftyLeft <= 0 ? 'disabled' : ''}>✂️ 50/50 (${fiftyLeft})</button>
+                    <button class="icon-btn" id="btnSecondChance" onclick="window._useSecondChance()" ${scLeft <= 0 ? 'disabled' : ''}>🔄 ${t('Второй шанс', 'Second Chance')} (${scLeft})</button>
+                  </div>
+                </div>
+              </div>`;
+            }
+
+            window._selectTopic = function(topicId) {
+                const topic = topics.find(t => t.id === topicId);
+                if (!topic) return;
+                const filtered = topic.questions.filter(q => q.difficulty === state.currentDifficulty);
+                if (filtered.length === 0) {
+                    alert(t('Нет вопросов для этой сложности! Выберите другую.', 'No questions for this difficulty! Choose another.'));
+                    return;
+                }
+                state.score = 0;
+                updateHeaderStats();
+                const shuffled = [...filtered].sort(() => Math.random() - 0.5);
+                startQuiz(topicId, topic.name.ru, topic.name.en, shuffled);
+            };
+
+            window._startMixedChallenge = function() {
+                const allQ = [];
+                topics.forEach(t => {
+                    t.questions.forEach(q => {
+                        if (q.difficulty === state.currentDifficulty) allQ.push({ ...q,
+                            sourceTopicId: t.id });
+                    });
+                });
+                if (allQ.length === 0) {
+                    alert(t('Нет вопросов!', 'No questions available!'));
+                    return;
+                }
+                const shuffled = allQ.sort(() => Math.random() - 0.5).slice(0, Math.min(15, allQ.length));
+                state.score = 0;
+                state.currentTopicId = 'mixed';
+                updateHeaderStats();
+                startQuiz('mixed', t('Смешанный вызов', 'Mixed Challenge'), 'Mixed Challenge', shuffled);
+            };
+
+            // ==================== POWERUPS ====================
+            window._useFiftyFifty = function() {
+                if (state.inventory.fiftyFifty <= 0) return;
+                if (state.activePowerups.fiftyFiftyUsedThisQuestion) return;
+                state.inventory.fiftyFifty--;
+                state.activePowerups.fiftyFiftyUsedThisQuestion = true;
+                saveState();
+                const qData = state.quizQuestions[state.currentQuestionIndex];
+                const correctIdx = qData.correct;
+                const wrongIndices = [];
+                qData.options.forEach((_, i) => { if (i !== correctIdx) wrongIndices.push(i); });
+                const shuffledWrong = wrongIndices.sort(() => Math.random() - 0.5);
+                const toHide = shuffledWrong.slice(0, 2);
+                toHide.forEach(i => {
+                    const btn = document.getElementById('optBtn' + i);
+                    if (btn) btn.classList.add('hidden-option');
+                });
+                document.getElementById('btn5050').disabled = true;
+                document.getElementById('btn5050').textContent = '✂️ 50/50 (0)';
+                updateHeaderStats();
+            };
+
+            window._useSecondChance = function() {
+                if (state.inventory.secondChance <= 0) return;
+                state.inventory.secondChance--;
+                state.activePowerups.secondChanceActive = true;
+                saveState();
+                document.getElementById('btnSecondChance').disabled = true;
+                document.getElementById('btnSecondChance').textContent =
+                    `🔄 ${t('Второй шанс', 'Second Chance')} (${state.inventory.secondChance})`;
+                updateHeaderStats();
+            };
+
+            // ==================== SELECT ANSWER ====================
+            window._selectAnswer = function(userChoice) {
+                const idx = state.currentQuestionIndex;
+                const qData = state.quizQuestions[idx];
+                const isCorrect = (userChoice === qData.correct);
+                const questionCard = document.getElementById('questionCard');
+                const explanationPanel = document.getElementById('explanationPanel');
+                const explanationRu = document.getElementById('explanationRu');
+                const explanationEn = document.getElementById('explanationEn');
+                const btnNext = document.getElementById('btnNext');
+                const allBtns = document.querySelectorAll('.option-btn');
+
+                allBtns.forEach(b => b.classList.add('disabled'));
+                const correctBtn = document.getElementById('optBtn' + qData.correct);
+                if (correctBtn) correctBtn.classList.add('correct-choice');
+                const userBtn = document.getElementById('optBtn' + userChoice);
+                if (userBtn) {
+                    if (isCorrect) userBtn.classList.add('correct-choice');
+                    else userBtn.classList.add('incorrect-choice');
+                }
+
+                if (isCorrect) {
+                    questionCard.classList.add('correct-flash');
+                    state.streak++;
+                    if (state.streak > state.maxStreak) state.maxStreak = state.streak;
+                    const bonusPoints = state.streak >= 3 ? 15 : 10;
+                    const bonusCoins = state.streak >= 3 ? 10 : 5;
+                    state.score += bonusPoints;
+                    state.grammarCoins += bonusCoins;
+                    playCorrectSound();
+                } else {
+                    if (state.activePowerups.secondChanceActive) {
+                        state.activePowerups.secondChanceActive = false;
+                        state.streak++;
+                        if (state.streak > state.maxStreak) state.maxStreak = state.streak;
+                        state.score += 8;
+                        state.grammarCoins += 3;
+                        questionCard.classList.add('correct-flash');
+                        playCorrectSound();
+                        explanationRu.textContent = '🔄 ' + t('Второй шанс! Ошибка прощена.',
+                            'Second Chance! Mistake forgiven.') + ' ' + qData.explanation.ru;
+                        explanationEn.textContent = '🔄 Second Chance! Mistake forgiven. ' + qData.explanation
+                            .en;
+                    } else {
+                        questionCard.classList.add('incorrect-flash');
+                        state.streak = 0;
+                        playIncorrectSound();
+                        explanationRu.textContent = '❌ ' + qData.explanation.ru;
+                        explanationEn.textContent = '❌ ' + qData.explanation.en;
+                    }
+                }
+                if (!explanationRu.textContent.includes('🔄')) {
+                    explanationRu.textContent = (isCorrect ? '✅ ' : '❌ ') + qData.explanation.ru;
+                    explanationEn.textContent = (isCorrect ? '✅ ' : '❌ ') + qData.explanation.en;
+                }
+                explanationPanel.classList.add('visible');
+                btnNext.classList.add('visible');
+                state.answers.push({ topicId: state.currentTopicId, questionIndex: idx, userChoice, correct: isCorrect,
+                    qData });
+                saveState();
+                updateHeaderStats();
+                const powerupBar = document.getElementById('powerupBar');
+                if (powerupBar) powerupBar.style.display = 'none';
+            };
+
+            // ==================== NEXT QUESTION ====================
+            window._goToNext = function() {
+                const idx = state.currentQuestionIndex;
+                const total = state.quizQuestions.length;
+                if (idx + 1 < total) {
+                    state.currentQuestionIndex++;
+                    state.activePowerups.fiftyFiftyUsedThisQuestion = false;
+                    renderQuizQuestion();
+                    const card = document.getElementById('questionCard');
+                    if (card) card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                } else {
+                    finishQuiz();
+                }
+            };
+
+            // ==================== FINISH QUIZ ====================
+            function finishQuiz() {
+                state.currentView = 'results';
+                const totalQ = state.quizQuestions.length;
+                const correctCount = state.answers.filter(a => a.correct).length;
+                const percent = Math.round((correctCount / totalQ) * 100);
+                const topicId = state.currentTopicId;
+                if (topicId && topicId !== 'mixed') {
+                    const bestScore = state.topicProgress[topicId]?.bestScore || 0;
+                    state.topicProgress[topicId] = {
+                        completed: percent >= 70,
+                        bestScore: Math.max(bestScore, state.score),
+                        totalQuestions: topics.find(t => t.id === topicId)?.questions.length || totalQ,
+                    };
+                }
+                if (topicId === 'mixed') {
+                    const perf = {};
+                    state.answers.forEach(a => {
+                        let tid = a.topicId;
+                        if (!tid || tid === 'mixed') {
+                            for (const t of topics) {
+                                if (t.questions.some(q => q.q.ru === a.qData?.q?.ru)) { tid = t.id; break; }
+                            }
+                        }
+                        if (tid && tid !== 'mixed') {
+                            if (!perf[tid]) perf[tid] = { correct: 0, total: 0 };
+                            perf[tid].total++;
+                            if (a.correct) perf[tid].correct++;
+                        }
+                    });
+                    for (const [tid, p] of Object.entries(perf)) {
+                        const pct = Math.round((p.correct / p.total) * 100);
+                        state.topicProgress[tid] = {
+                            completed: pct >= 70,
+                            bestScore: Math.max(state.topicProgress[tid]?.bestScore || 0, p.correct * 10),
+                            totalQuestions: topics.find(t => t.id === tid)?.questions.length || p.total,
+                        };
+                    }
+                }
+                saveState();
+                playVictorySound();
+                renderResultsFromState();
+            }
+
+            function renderResultsFromState() {
+                const totalQ = state.quizQuestions.length;
+                const correctCount = state.answers.filter(a => a.correct).length;
+                const percent = Math.round((correctCount / totalQ) * 100);
+                let emoji = '🌟';
+                if (percent >= 90) emoji = '🏆';
+                else if (percent >= 70) emoji = '🎉';
+                else if (percent >= 50) emoji = '👍';
+                else emoji = '💪';
+                let breakdownHTML = '';
+                const perfMap = {};
+                state.answers.forEach(a => {
+                    let tid = a.topicId;
+                    if (!tid || tid === 'mixed') {
+                        for (const t of topics) { if (t.questions.some(q => q.q.ru === a.qData?.q?.ru)) { tid =
+                                t.id; break; } }
+                    }
+                    if (tid && tid !== 'mixed') {
+                        if (!perfMap[tid]) perfMap[tid] = { correct: 0, total: 0, name: { ru: tid, en: tid } };
+                        perfMap[tid].correct += a.correct ? 1 : 0;
+                        perfMap[tid].total += 1;
+                        const tdata = topics.find(t => t.id === tid);
+                        if (tdata) perfMap[tid].name = tdata.name;
+                    }
+                });
+                for (const [tid, p] of Object.entries(perfMap)) {
+                    const pct = Math.round((p.correct / p.total) * 100);
+                    const cls = pct >= 70 ? 'mastered' : 'needs-work';
+                    const status = pct >= 70 ? t('✅ Усвоено', '✅ Mastered') : t('⚠️ Нужна практика',
+                        '⚠️ Needs Practice');
+                    breakdownHTML += `
+                <div class="breakdown-item ${cls}">
+                  <span class="breakdown-topic">${p.name.ru} / ${p.name.en}</span>
+                  <span>${p.correct}/${p.total}</span>
+                  <span class="breakdown-status ${cls}">${status}</span>
+                </div>`;
+                }
+                const retryLabel = state.currentTopicId && state.currentTopicId !== 'mixed' ?
+                    t('🔁 Повторить тему', '🔁 Retry Topic') :
+                    t('🔁 Повторить вызов', '🔁 Retry Challenge');
+                mainContainer.innerHTML = `
+              <div class="results-view">
+                <div class="results-card">
+                  <div class="results-emoji">${emoji}</div>
+                  <div class="results-title">${t('Квиз завершён!', 'Quiz Complete!')}</div>
+                  <div class="results-score">${state.score} ${t('очк.', 'pts')}</div>
+                  <div class="results-detail">${correctCount} / ${totalQ} ${t('правильно', 'correct')} (${percent}%)</div>
+                  <div class="results-detail">🔥 ${t('Макс. серия:', 'Max Streak:')} ${state.maxStreak} | 🪙 ${state.grammarCoins} ${t('монет', 'coins')}</div>
+                </div>
+                <div class="breakdown-section">
+                  <div class="breakdown-title">${t('📊 Разбор результатов', '📊 Performance Breakdown')}</div>
+                  ${breakdownHTML}
+                </div>
+                <button class="btn-retry" onclick="window._retryQuiz()">${retryLabel}</button>
+                <button class="btn-back" onclick="window._goToDashboard()">${t('🏠 На главную', '🏠 Dashboard')}</button>
+              </div>`;
+            }
+
+            window._retryQuiz = function() {
+                state.score = Math.max(0, state.score - state.answers.filter(a => a.correct).length * 10);
+                state.grammarCoins = Math.max(0, state.grammarCoins - state.answers.filter(a => a.correct).length *
+                    5);
+                state.streak = 0;
+                state.maxStreak = 0;
+                state.activePowerups = { secondChanceActive: false, fiftyFiftyUsedThisQuestion: false };
+                updateHeaderStats();
+                saveState();
+                const questions = [...state.quizQuestions].sort(() => Math.random() - 0.5);
+                const labelRu = state.quizTopicLabel.ru;
+                const labelEn = state.quizTopicLabel.en;
+                const tid = state.currentTopicId;
+                startQuiz(tid || 'mixed', labelRu, labelEn, questions);
+            };
+
+            window._goToDashboard = function() {
+                state.score = 0;
+                state.streak = 0;
+                state.maxStreak = 0;
+                state.activePowerups = { secondChanceActive: false, fiftyFiftyUsedThisQuestion: false };
+                updateHeaderStats();
+                renderDashboard();
+            };
+
+            // ==================== SHOP ====================
+            window._openShop = function() {
+                state.currentView = 'shop';
+                updateHeaderStats();
+                renderShop();
+            };
+
+            function renderShop() {
+                const shopItems = [
+                    { id: 'fiftyFifty', icon: '✂️', nameRu: '50/50', nameEn: '50/50', descRu: 'Убирает два неверных варианта',
+                        descEn: 'Removes two wrong options', price: 50, owned: state.inventory.fiftyFifty, type: 'consumable' },
+                    { id: 'secondChance', icon: '🔄', nameRu: 'Второй шанс', nameEn: 'Second Chance',
+                        descRu: 'Следующая ошибка не сломает стрик', descEn: 'Next mistake won\'t break streak',
+                        price: 100, owned: state.inventory.secondChance, type: 'consumable' },
+                    { id: 'themeNeon', icon: '💚', nameRu: 'Тема: Неон', nameEn: 'Theme: Neon', descRu: 'Неоновый киберпанк стиль',
+                        descEn: 'Neon cyberpunk style', price: 150, owned: state.inventory.themeNeon,
+                    type: 'permanent' },
+                    { id: 'themeRetro', icon: '📜', nameRu: 'Тема: Ретро-Бумага', nameEn: 'Theme: Retro Paper',
+                        descRu: 'Тёплый бумажный стиль', descEn: 'Warm paper-like style', price: 150,
+                        owned: state.inventory.themeRetro, type: 'permanent' },
+                ];
+                let itemsHTML = '';
+                shopItems.forEach(item => {
+                    const isOwnedPermanent = item.type === 'permanent' && item.owned;
+                    const canAfford = state.grammarCoins >= item.price;
+                    const disabled = isOwnedPermanent || !canAfford;
+                    const btnText = isOwnedPermanent ? t('✅ Куплено', '✅ Owned') :
+                        t(`Купить (${item.price}🪙)`, `Buy (${item.price}🪙)`);
+                    const ownedClass = isOwnedPermanent ? ' owned' : '';
+                    itemsHTML += `
+                <div class="shop-item${ownedClass}">
+                  <div class="shop-item-icon">${item.icon}</div>
+                  <div class="shop-item-name">${t(item.nameRu, item.nameEn)}</div>
+                  <div class="shop-item-desc">${t(item.descRu, item.descEn)}</div>
+                  <div class="shop-item-price">${item.price} 🪙</div>
+                  <button class="shop-item-btn" onclick="window._buyItem('${item.id}')" ${disabled ? 'disabled' : ''}>${btnText}</button>
+                </div>`;
+                });
+                mainContainer.innerHTML = `
+              <div class="shop-view">
+                <div class="shop-title">🛒 ${t('Магазин бонусов', 'Bonus Shop')}</div>
+                <div class="shop-subtitle">${t('Тратьте грамматические монеты на усиления и темы', 'Spend grammar coins on powerups and themes')}</div>
+                <div class="shop-grid">${itemsHTML}</div>
+                <button class="btn-back" onclick="window._goToDashboard()">${t('🏠 На главную', '🏠 Dashboard')}</button>
+              </div>`;
+            }
+
+            window._buyItem = function(itemId) {
+                const prices = { fiftyFifty: 50, secondChance: 100, themeNeon: 150, themeRetro: 150 };
+                const price = prices[itemId];
+                if (!price || state.grammarCoins < price) return;
+                if (itemId === 'fiftyFifty') {
+                    if (state.inventory.fiftyFifty >= 99) return;
+                    state.grammarCoins -= price;
+                    state.inventory.fiftyFifty++;
+                } else if (itemId === 'secondChance') {
+                    if (state.inventory.secondChance >= 99) return;
+                    state.grammarCoins -= price;
+                    state.inventory.secondChance++;
+                } else if (itemId === 'themeNeon') {
+                    if (state.inventory.themeNeon) return;
+                    state.grammarCoins -= price;
+                    state.inventory.themeNeon = true;
+                } else if (itemId === 'themeRetro') {
+                    if (state.inventory.themeRetro) return;
+                    state.grammarCoins -= price;
+                    state.inventory.themeRetro = true;
+                }
+                playShopSound();
+                saveState();
+                updateHeaderStats();
+                renderShop();
+                if (itemId === 'themeNeon' && state.inventory.themeNeon) {
+                    document.body.classList.remove('theme-retro-paper');
+                    document.body.classList.add('theme-neon');
+                    state.appliedTheme = 'theme-neon';
+                    saveState();
+                }
+                if (itemId === 'themeRetro' && state.inventory.themeRetro) {
+                    document.body.classList.remove('theme-neon');
+                    document.body.classList.add('theme-retro-paper');
+                    state.appliedTheme = 'theme-retro-paper';
+                    saveState();
+                }
+            };
+
+            // ==================== INIT ====================
+            function init() {
+                updateHeaderStats();
+                renderDashboard();
+                langToggle.textContent = state.uiLang === 'ru' ? '🌐 RU' : '🌐 EN';
+            }
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+        })();
+    </script>
+</body>
+</html>
